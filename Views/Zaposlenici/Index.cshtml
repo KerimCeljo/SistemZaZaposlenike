@@ -1,0 +1,63 @@
+@model IEnumerable<SistemZaZaposlenike.Models.Zaposlenik>
+
+@{
+    ViewData["Title"] = "Zaposlenici";
+}
+
+<h1>Zaposlenici</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj zaposlenika</a>
+</p>
+
+<form asp-action="Index" method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <label class="form-label">Filter po odjelu</label>
+        <select name="odjelId" class="form-select" asp-items="ViewBag.Odjeli">
+            <option value="">-- Svi odjeli --</option>
+        </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-outline-primary">Primijeni</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Plata</th>
+            <th>Datum zaposlenja</th>
+            <th>Odjel</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Ime</td>
+            <td>@item.Prezime</td>
+            <td>@item.Email</td>
+            <td>@item.PlataMonthly.ToString("N2")</td>
+            <td>@item.DatumZaposlenja.ToString("dd.MM.yyyy")</td>
+            <td>@item.Odjel?.Naziv</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ZaposlenikID" class="btn btn-sm btn-info">Details</a>
+                <a asp-action="Edit" asp-route-id="@item.ZaposlenikID" class="btn btn-sm btn-warning">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.ZaposlenikID" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

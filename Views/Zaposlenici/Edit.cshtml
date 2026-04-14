@@ -1,0 +1,59 @@
+@model SistemZaZaposlenike.Models.Zaposlenik
+
+@{
+    ViewData["Title"] = "Uredi zaposlenika";
+}
+
+<h1>Uredi zaposlenika</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ZaposlenikID" />
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Ime" class="form-label"></label>
+        <input asp-for="Ime" class="form-control" />
+        <span asp-validation-for="Ime" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Prezime" class="form-label"></label>
+        <input asp-for="Prezime" class="form-control" />
+        <span asp-validation-for="Prezime" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PlataMonthly" class="form-label"></label>
+        <input asp-for="PlataMonthly" class="form-control" />
+        <span asp-validation-for="PlataMonthly" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DatumZaposlenja" class="form-label"></label>
+        <input asp-for="DatumZaposlenja" type="date" class="form-control" />
+        <span asp-validation-for="DatumZaposlenja" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OdjelID" class="form-label">Odjel</label>
+        <select asp-for="OdjelID" asp-items="ViewBag.OdjelID" class="form-select">
+            <option value="">-- Odaberi odjel --</option>
+        </select>
+        <span asp-validation-for="OdjelID" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+    <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

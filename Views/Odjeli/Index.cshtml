@@ -1,0 +1,27 @@
+﻿@model IEnumerable<SistemZaZaposlenike.Models.Odjel>
+
+@{
+    ViewData["Title"] = "Odjeli";
+}
+
+<h1>Odjeli</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Naziv odjela</th>
+            <th>Lokacija</th>
+            <th>Broj zaposlenika</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var odjel in Model)
+        {
+            <tr>
+                <td>@odjel.Naziv</td>
+                <td>@odjel.Lokacija</td>
+                <td>@odjel.Zaposlenici.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
