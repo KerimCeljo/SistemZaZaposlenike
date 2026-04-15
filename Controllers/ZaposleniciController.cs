@@ -4,16 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using SistemZaZaposlenike.Data;
 using SistemZaZaposlenike.Models;
 using System.Threading.Tasks;
+using SistemZaZaposlenike.Services;
 
 namespace SistemZaZaposlenike.Controllers;
 
 public class ZaposleniciController : Controller
 {
     private readonly AppDbContext _context;
+    private readonly IValutaService _valutaService;
 
-    public ZaposleniciController(AppDbContext context)
+    public ZaposleniciController(AppDbContext context, IValutaService valutaService)
     {
         _context = context;
+        _valutaService = valutaService;
     }
 
     public async Task<IActionResult> Index(int? odjelId)
@@ -42,7 +45,7 @@ public class ZaposleniciController : Controller
         return View(zaposlenici);
     }
 
-    public async Task<IActionResult> Details(int? id)
+    public async Task<IActionResult> Details(int? id, string? valuta = null)
     {
         if (id == null)
             return NotFound();
@@ -53,6 +56,15 @@ public class ZaposleniciController : Controller
 
         if (zaposlenik == null)
             return NotFound();
+
+        ViewBag.OdabranaValuta = valuta;
+        ViewBag.KonvertovaniIznos = null;
+
+        if (!string.IsNullOrWhiteSpace(valuta))
+        {
+            var konvertovaniIznos = await _valutaService.KonvertujIzBamAsync(zaposlenik.PlataMonthly, valuta);
+            ViewBag.KonvertovaniIznos = konvertovaniIznos;
+        }
 
         return View(zaposlenik);
     }

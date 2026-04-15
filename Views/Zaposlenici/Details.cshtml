@@ -34,3 +34,34 @@
     <a asp-action="Edit" asp-route-id="@Model.ZaposlenikID" class="btn btn-warning">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Nazad</a>
 </div>
+
+<hr />
+
+<h4>Konverzija plate</h4>
+
+<form asp-action="Details" method="get" class="row g-3">
+    <input type="hidden" name="id" value="@Model.ZaposlenikID" />
+
+    <div class="col-md-4">
+        <label class="form-label">Odaberi valutu</label>
+        <select name="valuta" class="form-select">
+            <option value="">-- Odaberi valutu --</option>
+            <option value="EUR" selected="@(ViewBag.OdabranaValuta == "EUR")">EUR</option>
+            <option value="USD" selected="@(ViewBag.OdabranaValuta == "USD")">USD</option>
+            <option value="GBP" selected="@(ViewBag.OdabranaValuta == "GBP")">GBP</option>
+            <option value="CHF" selected="@(ViewBag.OdabranaValuta == "CHF")">CHF</option>
+        </select>
+    </div>
+
+    <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Konvertuj</button>
+    </div>
+</form>
+
+@if (ViewBag.OdabranaValuta != null)
+{
+    <div class="alert alert-info mt-3">
+        Konvertovana plata:
+        <strong>@(ViewBag.KonvertovaniIznos ?? 0) @ViewBag.OdabranaValuta</strong>
+    </div>
+}

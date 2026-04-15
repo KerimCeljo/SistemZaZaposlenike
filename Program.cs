@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using SistemZaZaposlenike.Data;
+using SistemZaZaposlenike.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<IValutaService, ValutaService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

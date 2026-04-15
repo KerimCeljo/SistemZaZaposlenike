@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SistemZaZaposlenike.Models.Projekat>
+
+@{
+    ViewData["Title"] = "Projekti";
+}
+
+<h1>Projekti</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Budžet (USD)</th>
+            <th>Datum početka</th>
+            <th>Datum kraja</th>
+            <th>Broj angažovanih zaposlenika</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var projekat in Model)
+        {
+            <tr>
+                <td>@projekat.Naziv</td>
+                <td>@(projekat.BudzetUSD?.ToString("N2") ?? "-")</td>
+                <td>@(projekat.DatumPocetak?.ToString("dd.MM.yyyy") ?? "-")</td>
+                <td>@(projekat.DatumKraj?.ToString("dd.MM.yyyy") ?? "-")</td>
+                <td>@projekat.ZaposlenikProjekti.Count</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@projekat.ProjekatID" class="btn btn-sm btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
