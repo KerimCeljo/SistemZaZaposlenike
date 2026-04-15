@@ -58,10 +58,16 @@
     </div>
 </form>
 
-@if (ViewBag.OdabranaValuta != null)
+@if (ViewBag.ValutaError != null)
+{
+    <div class="alert alert-warning mt-3">
+        @ViewBag.ValutaError
+    </div>
+}
+else if (ViewBag.OdabranaValuta != null && ViewBag.KonvertovaniIznos != null)
 {
     <div class="alert alert-info mt-3">
         Konvertovana plata:
-        <strong>@(ViewBag.KonvertovaniIznos ?? 0) @ViewBag.OdabranaValuta</strong>
+        <strong>@ViewBag.KonvertovaniIznos @ViewBag.OdabranaValuta</strong>
     </div>
 }
