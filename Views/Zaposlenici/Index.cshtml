@@ -6,6 +6,34 @@
     </a>
 </div>
 
+<form method="get" class="mb-3">
+    <div class="row g-2 align-items-end">
+
+        <div class="col-md-4">
+            <label class="form-label small text-muted">Filter po odjelu</label>
+
+            <select name="odjelId" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Svi odjeli --</option>
+
+                @foreach (var odjel in ViewBag.Odjeli)
+                {
+                    <option value="@odjel.Value"
+                            selected="@(odjel.Value == ViewBag.OdabraniOdjelId?.ToString())">
+                        @odjel.Text
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <a href="/Zaposlenici" class="btn btn-outline-secondary w-100">
+                Reset
+            </a>
+        </div>
+
+    </div>
+</form>
+
 <div class="card shadow-sm">
     <div class="card-body p-0">
 
