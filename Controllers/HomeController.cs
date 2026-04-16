@@ -1,31 +1,31 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SistemZaZaposlenike.Models;
-
-namespace SistemZaZaposlenike.Controllers;
+using Microsoft.EntityFrameworkCore;
+using SistemZaZaposlenike.Data;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly AppDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(AppDbContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        var brojZaposlenika = await _context.Zaposlenici.CountAsync();
+        var brojOdjela = await _context.Odjeli.CountAsync();
+        var brojProjekata = await _context.Projekti.CountAsync();
+
+        var prosjecnaPlata = await _context.Zaposlenici.AnyAsync()
+            ? await _context.Zaposlenici.AverageAsync(z => z.PlataMonthly)
+            : 0;
+
+        ViewBag.BrojZaposlenika = brojZaposlenika;
+        ViewBag.BrojOdjela = brojOdjela;
+        ViewBag.BrojProjekata = brojProjekata;
+        ViewBag.ProsjecnaPlata = prosjecnaPlata;
+
         return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

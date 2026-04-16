@@ -4,24 +4,54 @@
     ViewData["Title"] = "Odjeli";
 }
 
-<h1>Odjeli</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Odjeli</h2>
+</div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Naziv odjela</th>
-            <th>Lokacija</th>
-            <th>Broj zaposlenika</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var odjel in Model)
-        {
-            <tr>
-                <td>@odjel.Naziv</td>
-                <td>@odjel.Lokacija</td>
-                <td>@odjel.Zaposlenici.Count</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Naziv odjela</th>
+                    <th>Lokacija</th>
+                    <th class="text-center">Broj zaposlenika</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var odjel in Model)
+                {
+                    var odjelClass = odjel.Naziv switch
+                    {
+                        "IT" => "badge-it",
+                        "HR" => "badge-hr",
+                        "Finance" => "badge-finance",
+                        _ => "bg-secondary"
+                    };
+
+                    <tr>
+                        <td>
+                            <span class="badge badge-odjel @odjelClass">
+                                @odjel.Naziv
+                            </span>
+                        </td>
+
+                        <td>
+                            @odjel.Lokacija
+                        </td>
+
+                        <td class="text-center">
+                            <span class="badge bg-dark">
+                                @odjel.Zaposlenici.Count
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

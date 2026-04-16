@@ -1,8 +1,164 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="py-4">
+    <div class="p-5 mb-4 bg-white rounded-3 shadow-sm border">
+        <div class="container-fluid py-2">
+            <h1 class="display-5 fw-bold">Sistem za upravljanje zaposlenicima</h1>
+            <p class="col-lg-9 fs-5 text-muted">
+                Web aplikacija razvijena u ASP.NET Core MVC za upravljanje zaposlenicima,
+                odjelima, projektima, konverzijom plata i generisanje Excel izvještaja.
+            </p>
+
+            <div class="mt-4 d-flex flex-wrap gap-2">
+                <a asp-controller="Zaposlenici" asp-action="Index" class="btn btn-primary">
+                    Pregled zaposlenika
+                </a>
+                <a asp-controller="Odjeli" asp-action="Index" class="btn btn-outline-secondary">
+                    Odjeli
+                </a>
+                <a asp-controller="Projekti" asp-action="Index" class="btn btn-outline-secondary">
+                    Projekti
+                </a>
+                <a asp-controller="Izvjestaj" asp-action="Index" class="btn btn-success">
+                    Izvještaj
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small mb-1">Zaposlenici</div>
+                    <div class="fs-3 fw-bold counter" data-target="@ViewBag.BrojZaposlenika">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small mb-1">Odjeli</div>
+                    <div class="fs-3 fw-bold counter" data-target="@ViewBag.BrojOdjela">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small mb-1">Projekti</div>
+                    <div class="fs-3 fw-bold counter" data-target="@ViewBag.BrojProjekata">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm text-center h-100 border-success">
+                <div class="card-body">
+                    <div class="text-muted small mb-1">Prosječna plata</div>
+                    <div class="fs-5 fw-bold text-success counter-money" data-target="@Convert.ToInt32(ViewBag.ProsjecnaPlata)">0 BAM</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Zaposlenici</h5>
+                    <p class="card-text text-muted">
+                        Dodavanje, izmjena, brisanje i pregled zaposlenika uz validaciju podataka.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Odjeli</h5>
+                    <p class="card-text text-muted">
+                        Pregled svih odjela i broja zaposlenika raspoređenih po odjelima.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Projekti</h5>
+                    <p class="card-text text-muted">
+                        Evidencija projekata, angažovanih zaposlenika, uloga i sati rada.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm h-100 border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Izvještaj</h5>
+                    <p class="card-text text-muted">
+                        Generisanje i preuzimanje Excel izvještaja o zaposlenicima po odjelu.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const counters = document.querySelectorAll(".counter");
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute("data-target");
+                let current = 0;
+                const increment = Math.max(1, Math.ceil(target / 40));
+
+                const updateCounter = () => {
+                    current += increment;
+
+                    if (current >= target) {
+                        counter.textContent = target;
+                    } else {
+                        counter.textContent = current;
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+
+                updateCounter();
+            });
+
+            const moneyCounters = document.querySelectorAll(".counter-money");
+
+            moneyCounters.forEach(counter => {
+                const target = +counter.getAttribute("data-target");
+                let current = 0;
+                const increment = Math.max(1, Math.ceil(target / 40));
+
+                const updateMoneyCounter = () => {
+                    current += increment;
+
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString() + " BAM";
+                    } else {
+                        counter.textContent = current.toLocaleString() + " BAM";
+                        requestAnimationFrame(updateMoneyCounter);
+                    }
+                };
+
+                updateMoneyCounter();
+            });
+        });
+    </script>
+}

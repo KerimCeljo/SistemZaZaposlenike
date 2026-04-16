@@ -4,32 +4,63 @@
     ViewData["Title"] = "Projekti";
 }
 
-<h1>Projekti</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Projekti</h2>
+</div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Naziv</th>
-            <th>Budžet (USD)</th>
-            <th>Datum početka</th>
-            <th>Datum kraja</th>
-            <th>Broj angažovanih zaposlenika</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var projekat in Model)
-        {
-            <tr>
-                <td>@projekat.Naziv</td>
-                <td>@(projekat.BudzetUSD?.ToString("N2") ?? "-")</td>
-                <td>@(projekat.DatumPocetak?.ToString("dd.MM.yyyy") ?? "-")</td>
-                <td>@(projekat.DatumKraj?.ToString("dd.MM.yyyy") ?? "-")</td>
-                <td>@projekat.ZaposlenikProjekti.Count</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@projekat.ProjekatID" class="btn btn-sm btn-info">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Budžet</th>
+                    <th>Početak</th>
+                    <th>Kraj</th>
+                    <th class="text-center">Zaposlenici</th>
+                    <th class="text-end">Akcije</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var projekat in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">
+                            @projekat.Naziv
+                        </td>
+
+                        <td class="text-success fw-semibold">
+                            @(projekat.BudzetUSD?.ToString("N2") ?? "-") USD
+                        </td>
+
+                        <td>
+                            @(projekat.DatumPocetak?.ToString("dd.MM.yyyy") ?? "-")
+                        </td>
+
+                        <td>
+                            @(projekat.DatumKraj?.ToString("dd.MM.yyyy") ?? "-")
+                        </td>
+
+                        <td class="text-center">
+                            <span class="badge bg-dark">
+                                @projekat.ZaposlenikProjekti.Count
+                            </span>
+                        </td>
+
+                        <td class="text-end">
+                            <a asp-action="Details"
+                               asp-route-id="@projekat.ProjekatID"
+                               class="btn btn-sm btn-outline-primary">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

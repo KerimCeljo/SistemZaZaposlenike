@@ -4,52 +4,74 @@
     ViewData["Title"] = "Dodaj zaposlenika";
 }
 
-<h1>Dodaj zaposlenika</h1>
-
-<form asp-action="Create" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-    <div class="mb-3">
-        <label asp-for="Ime" class="form-label"></label>
-        <input asp-for="Ime" class="form-control" />
-        <span asp-validation-for="Ime" class="text-danger"></span>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Dodaj zaposlenika</h2>
+        <p class="text-muted mb-0">Unesite osnovne podatke za novog zaposlenika.</p>
     </div>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        Nazad na listu
+    </a>
+</div>
 
-    <div class="mb-3">
-        <label asp-for="Prezime" class="form-label"></label>
-        <input asp-for="Prezime" class="form-control" />
-        <span asp-validation-for="Prezime" class="text-danger"></span>
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Ime" class="form-label fw-semibold">Ime</label>
+                    <input asp-for="Ime" class="form-control" placeholder="Unesite ime" />
+                    <span asp-validation-for="Ime" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Prezime" class="form-label fw-semibold">Prezime</label>
+                    <input asp-for="Prezime" class="form-control" placeholder="Unesite prezime" />
+                    <span asp-validation-for="Prezime" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label fw-semibold">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="npr. ime.prezime@email.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="PlataMonthly" class="form-label fw-semibold">Mjesečna plata (BAM)</label>
+                    <input asp-for="PlataMonthly" class="form-control" placeholder="Unesite platu" />
+                    <span asp-validation-for="PlataMonthly" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="DatumZaposlenja" class="form-label fw-semibold">Datum zaposlenja</label>
+                    <input asp-for="DatumZaposlenja" type="date" class="form-control" />
+                    <span asp-validation-for="DatumZaposlenja" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="OdjelID" class="form-label fw-semibold">Odjel</label>
+                    <select asp-for="OdjelID" asp-items="ViewBag.OdjelID" class="form-select">
+                        <option value="">-- Odaberi odjel --</option>
+                    </select>
+                    <span asp-validation-for="OdjelID" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    Spremi zaposlenika
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    Otkaži
+                </a>
+            </div>
+        </form>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="PlataMonthly" class="form-label"></label>
-        <input asp-for="PlataMonthly" class="form-control" />
-        <span asp-validation-for="PlataMonthly" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="DatumZaposlenja" class="form-label"></label>
-        <input asp-for="DatumZaposlenja" type="date" class="form-control" />
-        <span asp-validation-for="DatumZaposlenja" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="OdjelID" class="form-label">Odjel</label>
-        <select asp-for="OdjelID" asp-items="ViewBag.OdjelID" class="form-select">
-            <option value="">-- Odaberi odjel --</option>
-        </select>
-        <span asp-validation-for="OdjelID" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Spremi</button>
-    <a asp-action="Index" class="btn btn-secondary">Nazad</a>
-</form>
+</div>
 
 @section Scripts {
     @{

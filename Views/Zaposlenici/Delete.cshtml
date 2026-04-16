@@ -4,35 +4,60 @@
     ViewData["Title"] = "Obriši zaposlenika";
 }
 
-<h1>Obriši zaposlenika</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1 text-danger">Obriši zaposlenika</h2>
+        <p class="text-muted mb-0">Ova akcija je trajna i ne može se poništiti.</p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        Nazad na listu
+    </a>
+</div>
 
-<div class="alert alert-warning">
+<div class="alert alert-warning d-flex align-items-center gap-2">
+    <strong>Upozorenje:</strong>
     Jesi li siguran da želiš obrisati ovog zaposlenika?
 </div>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">Ime</dt>
-            <dd class="col-sm-9">@Model.Ime</dd>
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <h5 class="card-title mb-4">Podaci zaposlenika</h5>
 
-            <dt class="col-sm-3">Prezime</dt>
-            <dd class="col-sm-9">@Model.Prezime</dd>
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">Ime</dt>
+            <dd class="col-sm-8 fw-semibold">@Model.Ime</dd>
 
-            <dt class="col-sm-3">Email</dt>
-            <dd class="col-sm-9">@Model.Email</dd>
+            <dt class="col-sm-4 text-muted">Prezime</dt>
+            <dd class="col-sm-8 fw-semibold">@Model.Prezime</dd>
 
-            <dt class="col-sm-3">Plata</dt>
-            <dd class="col-sm-9">@Model.PlataMonthly.ToString("N2")</dd>
+            <dt class="col-sm-4 text-muted">Email</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
 
-            <dt class="col-sm-3">Odjel</dt>
-            <dd class="col-sm-9">@Model.Odjel?.Naziv</dd>
+            <dt class="col-sm-4 text-muted">Mjesečna plata</dt>
+            <dd class="col-sm-8 text-success fw-bold">
+                @Model.PlataMonthly.ToString("N2") BAM
+            </dd>
+
+            <dt class="col-sm-4 text-muted">Odjel</dt>
+            <dd class="col-sm-8">
+                <span class="badge bg-secondary px-3 py-2">
+                    @Model.Odjel?.Naziv
+                </span>
+            </dd>
         </dl>
     </div>
 </div>
 
 <form asp-action="Delete" method="post">
     <input type="hidden" asp-for="ZaposlenikID" />
-    <button type="submit" class="btn btn-danger">Obriši</button>
-    <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">
+            Obriši zaposlenika
+        </button>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            Otkaži
+        </a>
+    </div>
 </form>

@@ -15,28 +15,35 @@ public class ValutaService : IValutaService
 
     public async Task<decimal?> KonvertujIzBamAsync(decimal iznosBam, string ciljnaValuta)
     {
-        var baseUrl = _configuration["ExchangeRateApi:BaseUrl"];
+        try
+        {
+            var baseUrl = _configuration["ExchangeRateApi:BaseUrl"];
 
-        if (string.IsNullOrWhiteSpace(baseUrl))
+            if (string.IsNullOrWhiteSpace(baseUrl))
+                return null;
+
+            var response = await _httpClient.GetAsync(baseUrl);
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            using var document = JsonDocument.Parse(json);
+
+            if (!document.RootElement.TryGetProperty("rates", out var ratesElement))
+                return null;
+
+            if (!ratesElement.TryGetProperty(ciljnaValuta.ToUpper(), out var rateElement))
+                return null;
+
+            var rate = rateElement.GetDecimal();
+
+            return Math.Round(iznosBam * rate, 2);
+        }
+        catch
+        {
             return null;
-
-        var response = await _httpClient.GetAsync(baseUrl);
-
-        if (!response.IsSuccessStatusCode)
-            return null;
-
-        var json = await response.Content.ReadAsStringAsync();
-
-        using var document = JsonDocument.Parse(json);
-
-        if (!document.RootElement.TryGetProperty("rates", out var ratesElement))
-            return null;
-
-        if (!ratesElement.TryGetProperty(ciljnaValuta.ToUpper(), out var rateElement))
-            return null;
-
-        var rate = rateElement.GetDecimal();
-
-        return Math.Round(iznosBam * rate, 2);
+        }
     }
 }

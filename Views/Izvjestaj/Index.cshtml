@@ -2,10 +2,50 @@
     ViewData["Title"] = "Izvještaj";
 }
 
-<h1>Izvještaj</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Izvještaj</h2>
+        <p class="text-muted mb-0">Preuzimanje Excel izvještaja o zaposlenicima grupisanim po odjelu.</p>
+    </div>
+</div>
 
-<p>Preuzmi Excel izvještaj o zaposlenicima grupisanim po odjelu.</p>
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4">
+                <h5 class="card-title mb-3">Excel izvještaj</h5>
+                <p class="text-muted mb-4">
+                    Izvještaj sadrži pregled zaposlenika po odjelima, uključujući osnovne podatke,
+                    ukupan broj zaposlenika i prosječnu platu po odjelu.
+                </p>
 
-<a asp-action="Download" class="btn btn-success">
-    Preuzmi izvještaj
-</a>
+                <div class="d-flex flex-wrap gap-2">
+                    <a asp-action="Download" class="btn btn-success">
+                        Preuzmi Excel izvještaj
+                    </a>
+
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+                        Nazad na početnu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-4">
+                <h5 class="card-title mb-3">Sadržaj izvještaja</h5>
+
+                <ul class="mb-0 text-muted ps-3">
+                    <li>naziv odjela</li>
+                    <li>lista zaposlenika po odjelu</li>
+                    <li>email i datum zaposlenja</li>
+                    <li>mjesečna plata zaposlenika</li>
+                    <li>ukupan broj zaposlenika po odjelu</li>
+                    <li>prosječna plata po odjelu</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

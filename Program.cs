@@ -5,7 +5,10 @@ using SistemZaZaposlenike.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<IValutaService, ValutaService>();
+builder.Services.AddHttpClient<IValutaService, ValutaService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(5);
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

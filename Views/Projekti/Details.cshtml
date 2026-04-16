@@ -4,52 +4,77 @@
     ViewData["Title"] = "Detalji projekta";
 }
 
-<h1>Detalji projekta</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Detalji projekta</h2>
+        <p class="text-muted mb-0">Pregled osnovnih informacija i angažovanih zaposlenika.</p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        Nazad na listu
+    </a>
+</div>
 
-<div class="card mb-4">
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">Naziv</dt>
-            <dd class="col-sm-9">@Model.Naziv</dd>
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <h5 class="card-title mb-4">Osnovni podaci</h5>
 
-            <dt class="col-sm-3">Budžet (USD)</dt>
-            <dd class="col-sm-9">@(Model.BudzetUSD?.ToString("N2") ?? "-")</dd>
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">Naziv</dt>
+            <dd class="col-sm-8 fw-semibold">@Model.Naziv</dd>
 
-            <dt class="col-sm-3">Datum početka</dt>
-            <dd class="col-sm-9">@(Model.DatumPocetak?.ToString("dd.MM.yyyy") ?? "-")</dd>
+            <dt class="col-sm-4 text-muted">Budžet</dt>
+            <dd class="col-sm-8 text-success fw-bold">
+                @(Model.BudzetUSD?.ToString("N2") ?? "-") USD
+            </dd>
 
-            <dt class="col-sm-3">Datum kraja</dt>
-            <dd class="col-sm-9">@(Model.DatumKraj?.ToString("dd.MM.yyyy") ?? "-")</dd>
+            <dt class="col-sm-4 text-muted">Datum početka</dt>
+            <dd class="col-sm-8">@(Model.DatumPocetak?.ToString("dd.MM.yyyy") ?? "-")</dd>
+
+            <dt class="col-sm-4 text-muted">Datum kraja</dt>
+            <dd class="col-sm-8">@(Model.DatumKraj?.ToString("dd.MM.yyyy") ?? "-")</dd>
+
+            <dt class="col-sm-4 text-muted">Broj angažovanih zaposlenika</dt>
+            <dd class="col-sm-8">
+                <span class="badge bg-dark px-3 py-2">
+                    @Model.ZaposlenikProjekti.Count
+                </span>
+            </dd>
         </dl>
     </div>
 </div>
 
-<h3>Angažovani zaposlenici</h3>
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="p-4 pb-2">
+            <h5 class="mb-0">Angažovani zaposlenici</h5>
+        </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Email</th>
-            <th>Uloga</th>
-            <th>Sati na tjednu</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var stavka in Model.ZaposlenikProjekti)
-        {
-            <tr>
-                <td>@stavka.Zaposlenik?.Ime</td>
-                <td>@stavka.Zaposlenik?.Prezime</td>
-                <td>@stavka.Zaposlenik?.Email</td>
-                <td>@stavka.Uloga</td>
-                <td>@stavka.SatiNaTjednu</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div class="mt-3">
-    <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Email</th>
+                    <th>Uloga</th>
+                    <th class="text-center">Sati / tjedan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stavka in Model.ZaposlenikProjekti)
+                {
+                    <tr>
+                        <td class="fw-semibold">@stavka.Zaposlenik?.Ime</td>
+                        <td>@stavka.Zaposlenik?.Prezime</td>
+                        <td>@stavka.Zaposlenik?.Email</td>
+                        <td>@stavka.Uloga</td>
+                        <td class="text-center">
+                            <span class="badge bg-primary">
+                                @stavka.SatiNaTjednu
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
